@@ -6,6 +6,7 @@ use reqwest::{
 
 pub struct SellAppClient {
     api_key: String,
+    store_slug: String,
     http_client: Client,
 }
 
@@ -16,6 +17,12 @@ impl SellAppClient {
             "Authorization",
             HeaderValue::from_str(format!("Bearer {}", self.api_key).as_str()).unwrap(),
         );
+        if !self.store_slug.is_empty() {
+            headers.insert(
+                "X-STORE",
+                HeaderValue::from_str(self.store_slug.as_str()).unwrap(),
+            );
+        }
         for header in headers_vec {
             let header_key = header[0];
             let header_value = HeaderValue::from_str(header[1]).unwrap();
@@ -775,14 +782,20 @@ impl SellAppClient {
 
 /// Initialize the client to make calls with your SellApp API key.
 ///
+/// **Note**: ``store_slug`` is required if you are part of multiple stores, and wish to access a specific one.
+///
+/// Leave an empty &str to default to the first store from your storefront list.
+///
 /// ```
-/// let sellapp_api = sellapp::init("your_api_key");
+/// let sellapp_api = sellapp::init("your_api_key", "your_store_slug");
 /// ```
-pub fn init(api_key: &str) -> SellAppClient {
+pub fn init(api_key: &str, store_slug: &str) -> SellAppClient {
     let key = api_key.to_string();
+    let slug = store_slug.to_string();
     let http_client = reqwest::Client::new();
     return SellAppClient {
         api_key: key,
+        store_slug: slug,
         http_client,
     };
 }

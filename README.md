@@ -11,7 +11,7 @@ use tokio;
 
 #[tokio::main]
 async fn main() {
-    let api = sellapp::init("your_api_key");
+    let api = sellapp::init("your_api_key", "");
 
     let res = api.invoices_list_all("?limit=25").await.unwrap();
 
