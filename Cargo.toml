@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 description = "Simple asynchronous wrapper for the Sell.App API."
 repository = "https://github.com/WhatYouThing/sellapp-rs"
+license = "Apache-2.0"
+license-file = "LICENSE"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
